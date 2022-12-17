@@ -1,6 +1,6 @@
 <x-layout>
     <x-slot name="header">
-        {{ __('Docs') }}
+        {{ __('Quotes') }}
     </x-slot>
 
     <x-panel>
