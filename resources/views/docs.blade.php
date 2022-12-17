@@ -4,7 +4,13 @@
     </x-slot>
 
     <x-panel>
-        <h1 class="text-2xl">Hi developer!</h1>
-        <p class="text-lg mt-2">You'll find the docs at <a target="_blank" class="underline" href="https://splade.dev/docs">splade.dev/docs</a></p>
+        <x-splade-defer url="http://api.quotable.io/random">
+            <p v-text="response.content" />
+            <p v-if="processing"> Processing....</p>
+            <button @click="reload">Reload</button>
+        </x-splade-defer>
+    </x-panel>
+    <x-panel>
+        test
     </x-panel>
 </x-layout>
