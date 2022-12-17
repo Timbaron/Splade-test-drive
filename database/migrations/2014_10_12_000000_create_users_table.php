@@ -17,6 +17,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('gender');
+            $table->date('date_of_birth')->nullable();
+            $table->text('biography')->nullable();
+            $table->boolean('agree_terms')->default(false);
+            $table->string('role')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

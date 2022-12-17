@@ -1,5 +1,5 @@
 <x-splade-data default="{ open: false }">
-    <nav class="bg-white border-b-4 border-blue-500">
+    <nav class="bg-white border-b-1 border-blue-500">
         <!-- Primary Navigation Menu -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">

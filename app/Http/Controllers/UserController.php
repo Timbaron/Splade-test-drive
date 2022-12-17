@@ -18,18 +18,33 @@ class UserController extends Controller
     public function index()
     {
         $users = QueryBuilder::for(User::class)
-        ->defaultSort('name')
-        ->allowedSorts('name','email','created_at','updated_at')
-        ->paginate()
-        ->withQueryString();
+            ->defaultSort('name')
+            ->allowedSorts('name', 'email', 'gender')
+            ->allowedFilters('name', 'email', 'gender')
+            ->paginate()
+            ->withQueryString();
 
         return view('user.index', [
             'users' => SpladeTable::for($users)
-            ->defaultSort('name')
-            ->column('name','Names',true, false, true)
-            ->column('email','Email Address',true, false, true)
-            ->column('created_at','Date Created',true, false, true)
-            ->column('updated_at','Date Last Updated',true, false, true)
+                ->defaultSort('name')
+                // ->withGlobalSearch('Search for what you want')
+                ->rowLink(function (User $user) {
+                    return route('user.show', $user);
+                })
+                ->column('name', 'Names', sortable: true, searchable: true)
+                ->column('email', 'Email Address', sortable: true, searchable: true)
+                ->column('gender', sortable: true, searchable: true)
+                ->column('date_of_birth', 'Date of Birth', sortable: true, searchable: true)
+                // ->column('biography', 'Biography', sortable: true, searchable: true)
+                // ->column('agree_terms', 'Agree to Terms and Conditions', sortable: true, searchable: true)
+                ->column('role', 'Role', sortable: true, searchable: true)
+                // ->column('created_at','Date Created', sortable:true, searchable:true)
+                // ->column('updated_at','Date Last Updated', sortable:true, searchable:true)
+                ->column('actions', 'Actions', sortable: false, searchable: false, canBeHidden: false)
+                ->selectFilter('gender', [
+                    'Male' => 'Male',
+                    'Female' => 'Female'
+                ])
         ]);
     }
 
@@ -75,8 +90,12 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view ('user.edit', [
+        $gender = ['male', 'female'];
+        $roles = ['admin', 'Manager', 'Developer', 'Editor', 'Writer'];
+        return view('user.edit', [
             'user' => $user,
+            'gender' => $gender,
+            'roles' => $roles,
         ]);
     }
 
@@ -90,18 +109,31 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $data = $request->validate([
-            'name' => ['required','string', 'max:100'],
+            'name' => ['required', 'string', 'max:100'],
+            'email' => ['required', 'email', 'max:100'],
+            'role' => ['required', 'string'],
+            'date_of_birth' => ['required', 'date'],
+            'biography' => ['required', 'string', 'max:200'],
+            'gender' => ['required', 'string'],
+            'agree_terms' => ['required', 'boolean'],
         ]);
+
+        
+        if ($data['gender'] == '0') {
+            $data['gender'] = 'Male';
+        } else {
+            $data['gender'] = 'Female';
+        }
 
         $user->update($data);
 
         Toast::title('The user was updated!!!')
-        ->leftTop()
-        ->backdrop()
-        ->info()
-        ->autoDismiss(5);
+            ->leftTop()
+            ->backdrop()
+            ->info()
+            ->autoDismiss(1);
 
-        return redirect()->route('user.show',$user);
+        return redirect()->route('users');
     }
 
     /**

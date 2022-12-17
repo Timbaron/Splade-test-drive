@@ -17,10 +17,13 @@ class UserFactory extends Factory
      */
     public function definition()
     {
+        $gender = ['male','female'];
+        $pickedGender = $gender[array_rand($gender)];
         return [
-            'name' => fake()->name(),
+            'name' => fake()->name($pickedGender),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
+            'gender' => ucwords($pickedGender),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
         ];

@@ -19,13 +19,13 @@ Route::middleware(['splade'])->group(function () {
     Route::get('/quotes', fn () => view('quote'))->name('quotes');
 
     Route::get('users', [UserController::class, 'index'])->name('users');
-    Route::get('/user/{user}', [UserController::class, 'show'])->name('user.show');
-    Route::get('/user/{user}/edit', [UserController::class, 'edit'])->name('user.edit');
-    Route::post('/user/{user}', [UserController::class, 'update'])->name('user.update');
+    Route::get('/users/{user}', [UserController::class, 'show'])->name('user.show');
+    Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('user.edit');
+    Route::post('/users/{user}', [UserController::class, 'update'])->name('user.update');
 
     // Registers routes to support Table Bulk Actions and Exports...
     // Route::spladeTable();
 
     // Registers routes to support async File Uploads with Filepond...
-    // Route::spladeUploads();
+    Route::spladeUploads();
 });
