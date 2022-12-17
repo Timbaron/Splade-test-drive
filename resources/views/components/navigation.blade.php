@@ -1,5 +1,5 @@
 <x-splade-data default="{ open: false }">
-    <nav class="bg-white border-b border-gray-100">
+    <nav class="bg-white border-b-4 border-blue-500">
         <!-- Primary Navigation Menu -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
@@ -17,8 +17,11 @@
                             {{ __('Home') }}
                         </x-nav-link>
 
-                        <x-nav-link href="{{ route('docs') }}" :active="request()->routeIs('docs')">
-                            {{ __('Documentation') }}
+                        <x-nav-link href="{{ route('quotes') }}" :active="request()->routeIs('quotes')">
+                            {{ __('Quotes') }}
+                        </x-nav-link>
+                        <x-nav-link href="{{route('users')}}" :active="request()->routeIs('users')">
+                            {{__('Users')}}
                         </x-nav-link>
                     </div>
                 </div>
@@ -42,8 +45,8 @@
                     {{ __('Home') }}
                 </x-responsive-nav-link>
 
-                <x-responsive-nav-link href="{{ route('docs') }}" :active="request()->routeIs('docs')">
-                    {{ __('Documentation') }}
+                <x-responsive-nav-link href="{{ route('quotes') }}" :active="request()->routeIs('quotes')">
+                    {{ __('Quotes') }}
                 </x-responsive-nav-link>
             </div>
         </div>

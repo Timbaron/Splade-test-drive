@@ -7,10 +7,7 @@
         <x-splade-defer url="http://api.quotable.io/random">
             <p v-text="response.content" />
             <p v-if="processing"> Processing....</p>
-            <button @click="reload">Reload</button>
+            <button @click="reload" class="bg-blue-500 p-2 mt-3 rounded">Reload</button>
         </x-splade-defer>
-    </x-panel>
-    <x-panel>
-        test
     </x-panel>
 </x-layout>
