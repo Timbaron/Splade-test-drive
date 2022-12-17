@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use ProtoneMedia\Splade\Facades\Toast;
 use ProtoneMedia\Splade\SpladeTable;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class UserController extends Controller
 {
@@ -16,15 +17,20 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = SpladeTable::for(User::class)
-        ->column('id')
-        ->column('name','Names',true, false, true)
-        ->column('email',null,true, false, true)
-        ->column('created_at','Date Created',true, false, true)
-        ->column('updated_at','Date Last Updated',true, false, true)
-        ->paginate(5);
+        $users = QueryBuilder::for(User::class)
+        ->defaultSort('name')
+        ->allowedSorts('name','email','created_at','updated_at')
+        ->paginate()
+        ->withQueryString();
 
-        return view('user.index', compact('users'));
+        return view('user.index', [
+            'users' => SpladeTable::for($users)
+            ->defaultSort('name')
+            ->column('name','Names',true, false, true)
+            ->column('email','Email Address',true, false, true)
+            ->column('created_at','Date Created',true, false, true)
+            ->column('updated_at','Date Last Updated',true, false, true)
+        ]);
     }
 
     /**
